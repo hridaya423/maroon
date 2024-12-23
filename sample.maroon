@@ -1,0 +1,55 @@
+# Test basic variable assignment
+x be 5
+y be 10
+bark "Testing variables:"
+bark x, y
+
+# Test arithmetic
+result be x plus y
+bark "Testing arithmetic:"
+bark "x plus y =", result
+new_result be result minus 3
+bark "After subtraction:", new_result
+new_result be new_result times 2
+bark "After multiplication:", new_result
+final_result be new_result divided_by 4
+bark "After division:", final_result
+ 
+# Test strings
+message be "Ahoy, Pirates!"
+bark "Testing strings:"
+bark message
+
+# Test lists
+numbers be list of 1, 2, 3, 4, 5
+bark "Testing lists:"
+bark numbers
+add 6 to numbers 
+bark "After adding 6:", numbers
+
+# Test built-in functions
+max_nums be list of 5, 10, 3
+maxval be plunder sails with max_nums
+min_nums be list of 5, 10, 3
+minval be abandon sails with min_nums
+bark "Testing built-ins:"
+bark "Maximum value:", maxval
+bark "Minimum value:", minval
+
+# Test conditionals
+if x be less_than 10, then bark "x is less than 10" else bark "x is greater or equal to 10"
+
+# Test function
+voyage double(n):
+    result be n times 2
+    bark "Double of", n, "is", result
+    return result
+end voyage
+
+bark "Testing function:"
+doubled be double sails with 5
+bark "Function returned:", doubled
+
+# Show final state
+bark "Final state:"
+debug_chest
