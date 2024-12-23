@@ -78,6 +78,9 @@ Example:
 treasure be 42
 bark "Me treasure chest holds" treasure "gold pieces!"
 ```
+4. Run the script with:
+python main.py yourfilename
+or python main.py for the shell
 
 ## License
 
