@@ -2,6 +2,55 @@
 
 Maroon is a pirate-themed programming language that makes coding as adventurous as sailing the high seas! Written in Python, it features a unique syntax inspired by pirate parlance while maintaining functional programming capabilities.
 
+## Update v1.1
+### New Control Structures
+
+#### While loops with comparison operators
+
+`while counter be less_than 3 bark counter`
+
+#### Plunder loops (foreach)
+
+`plunder each coin from treasure_chest bark coin`
+
+#### Repeat loops
+
+`repeat 3 times bark "BOOM!"`
+
+### Choose statements (switch/case)
+```
+choose x:
+    case 1: bark "one"
+    default: bark "unknown"
+end choose
+```
+
+### Error Handling
+```
+brace for impact:
+    bark "Dangerous waters"
+if capsized, bark "Error!"
+```
+
+### Functional Operations
+
+- List comprehension: `list of 1, 2, 3 where each times 2`
+- Filter: `coins where it greater_than 5`
+- Reduce: `reduce coins with result plus it`
+
+### String Operations
+
+- Upper/lower case: `"hello" upper`
+- Split/join: `"hello world" split " "`
+
+### Custom Dialects
+```
+dialect Caribbean:
+    "shout" be "bark"
+    "expedition" be "voyage"
+end dialect
+```
+
 ## Features
 
 - Pirate-themed syntax that's both fun and functional
