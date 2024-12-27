@@ -119,3 +119,36 @@ end expedition
 shout 1
 
 greet sail_with "Hi"
+
+bark roll_dice sails with 20
+bark random_float sails with
+bark random_float sails with 10, 20
+
+crew be list of 1, 2, 3, 4, 5
+bark random_pick sails with crew
+bark random_sample sails with crew, 3
+bark normal_random sails with
+
+# Math operations 
+x be 5
+bark factorial sails with x
+
+angle be 3.14159
+bark sin sails with angle
+bark cos sails with angle
+bark tan sails with angle
+
+bark exp sails with 2
+bark log sails with 10
+bark log sails with 8, 2
+
+# Statistical operations
+numbers be list of 2, 4, 6, 8, 10
+bark mean sails with numbers
+bark median sails with numbers
+bark sum sails with numbers
+
+# Gaming functions
+bark flip_coin sails with
+bark roll_multiple sails with 3, 6
+bark roll_multiple sails with 2, 20
