@@ -1,4 +1,4 @@
-![Maroon Logo](https://github.com/hridaya423/maroon/blob/master/maroon-logo.png)
+![Maroon Logo](https://cloud-r5gvnkecb-hack-club-bot.vercel.app/0maroon_logo-removebg-preview.png)
 
 Maroon is a pirate-themed programming language that makes coding as adventurous as sailing the high seas! Written in Python, it features a unique syntax inspired by pirate parlance while maintaining functional programming capabilities.
 
