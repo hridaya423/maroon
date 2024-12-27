@@ -1,0 +1,121 @@
+# Test basic variable assignment
+x be 5
+y be 10
+bark "Testing variables:"
+bark x, y
+
+# Test arithmetic
+result be x plus y
+bark "Testing arithmetic:"
+bark "x plus y =", result
+new_result be result minus 3
+bark "After subtraction:", new_result
+new_result be new_result times 2
+bark "After multiplication:", new_result
+final_result be new_result divided_by 4
+bark "After division:", final_result
+ 
+# Test strings
+message be "Ahoy, Pirates!"
+bark "Testing strings:"
+bark message
+
+# Test lists
+numbers be list of 1, 2, 3, 4, 5
+bark "Testing lists:"
+bark numbers
+add 6 to numbers 
+bark "After adding 6:", numbers
+
+# Test built-in functions
+max_nums be list of 5, 10, 3
+maxval be plunder sails with max_nums
+min_nums be list of 5, 10, 3
+minval be abandon sails with min_nums
+bark "Testing built-ins:"
+bark "Maximum value:", maxval
+bark "Minimum value:", minval
+
+# Test conditionals
+if x be less_than 10, then bark "x is less than 10" else bark "x is greater or equal to 10"
+
+# Test function
+voyage double(n):
+    result be n times 2
+    bark "Double of", n, "is", result
+    return result
+end voyage
+
+bark "Testing function:"
+doubled be double sails with 5
+bark "Function returned:", doubled
+
+# Show final state
+bark "Final state:"
+debug_chest
+
+# UPDATED FEATURES START FROM HERE:
+
+# Set up some initial variables
+weather be "stormy"
+treasure_chest be list of 1, 2, 3, 4, 5
+crew_list be list of "Jack", "Anne", "Mary", "Henry"
+counter be 0
+
+# While loop with proper comparison
+while counter be less_than 3 bark counter
+
+# Plunder loop examples
+plunder each coin from treasure_chest bark coin
+plunder each sailor from crew_list bark "Welcome aboard" sailor
+
+# Repeat loop example
+repeat 3 times bark "BOOM!"
+
+# Using a variable for repeat count
+cannon_count be 2
+repeat cannon_count times bark "FIRE!"
+
+# Example usage:
+x be 2
+choose x:
+    case 1: bark "one"
+    case 2: bark "two"
+    case 3: bark "three"
+    default: bark "unknown number"
+end choose
+
+brace for impact:
+    bark "Attempting dangerous waters"
+if capsized, bark "Error, Capsized in execution!"
+
+# List with nested ops
+coins be list of 1, 2, 3 where each times 2 plus 3
+
+# Filter
+big_coins be coins where it greater_than 5
+
+# Reduce
+total be reduce coins with result plus it
+
+# String ops
+greeting be "hello world" upper
+words be greeting split " "
+sentence be words join ", "
+
+# Define a Caribbean dialect
+dialect Caribbean:
+    "shout" be "bark"
+    "expedition" be "voyage"
+    "treasure" be "variable"
+    "sail_with" be "sails with"
+end dialect
+
+# Define the function
+expedition greet(txt):      
+    shout txt      
+end expedition
+
+shout 1
+
+greet sail_with "Hi"
