@@ -152,3 +152,59 @@ bark sum sails with numbers
 bark flip_coin sails with
 bark roll_multiple sails with 3, 6
 bark roll_multiple sails with 2, 20
+
+# V1.2 FEATURES SHOWCASE
+
+voyage sail_to(destination, speed be 10):
+    bark "Sailing to", destination, "at", speed, "knots!"
+end voyage
+
+sail_to sails with "Tortuga"
+sail_to sails with "Havana", 15
+
+voyage double(n):
+    return n times 2
+end voyage
+
+voyage is_even(x):
+    return x modulo 2 equals 0
+end voyage
+
+
+numbers be list of 1, 2, 3, 4, 5
+empty_list be list of
+
+numbers be list of 1, 2, 3, 4, 5
+evens be filter sails with numbers, "is_even"
+doubled be map sails with numbers, "double"
+
+bark "Working Map:", doubled
+bark "Working Filter:", evens
+bark "Empty List:", empty_list
+
+original be list of 1, 2, 3, 4, 5
+bark "Original list:", original
+shuffled be shuffle sails with original
+bark "Shuffled list: ", shuffled
+
+options be list of "Aye", "Arrr", "Yo-ho-ho!"
+weights be list of 1, 2, 7
+chosen be weighted_choice sails with options, weights
+bark "The pirate says: ", chosen
+
+crew_list be list of "Jack Sparrow", "Will Turner", "Elizabeth Swann"
+
+plunder each sailor from crew_list bark "Ahoy," sailor
+
+import map
+find_treasure sails with
+
+bark shout sails with "ahoy matey!"
+
+treasure_str be "gold,silver,doubloons"
+separator be ","
+loot be split_loot sails with treasure_str, separator
+bark loot[1]
+
+crew be list of "Blackbeard", "Calico", "Anne"
+bark join_crew sails with crew, " & "

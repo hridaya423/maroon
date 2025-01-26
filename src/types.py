@@ -1,7 +1,23 @@
 class PirateType:
     def __init__(self, value: any, type_name: str = None):
         self.value = value
-        self.type_name = type_name or type(value).__name__
+        if isinstance(value, dict):
+            self.type_name = 'dict'
+        else:
+            self.type_name = type_name or type(value).__name__
+            
+    def __getitem__(self, key):
+        if isinstance(self.value, (list, dict)):
+            return self.value[key]
+        raise PirateException(f"{self.type_name} doesn't support indexing")
+
+    def __setitem__(self, key, value):
+        if isinstance(self.value, dict):
+            self.value[key] = value
+        elif isinstance(self.value, list):
+            self.value[key] = value
+        else:
+            raise PirateException(f"{self.type_name} doesn't support item assignment")
 
     def __repr__(self):
         return f"{self.value}"

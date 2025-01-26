@@ -2,6 +2,75 @@
 
 Maroon is a pirate-themed programming language that makes coding as adventurous as sailing the high seas! Written in Python, it features a unique syntax inspired by pirate parlance while maintaining functional programming capabilities.
 
+## Update v1.2 - The Crew Expansion
+### New Features & Booty
+
+#### Default Function Parameters
+```bash
+voyage raid(island be "Tortuga", loot be "gold"):
+    bark "Plundering" loot "from" island
+end voyage
+
+raid()
+raid("Port Royal", "emeralds")
+```
+#### Parentheses Support
+`booty be (10 divided_by 2) plus (3 times 4)`
+
+#### Modular Code Imports
+```bash
+import "cannon_loader.maroon"
+import "navigator/star_chart"
+```
+
+#### Enhanced String Operations
+```bash
+bark shout("whisper")
+bark split_loot("apple|banana|coconut", "|")[1]
+bark join_crew(list of "A", "B", "C", "D"), " - ")
+```
+#### Advanced Collection Tools
+`treasure_map be list of 1, 2, 3, 4, 5`
+
+#### Shuffle like a proper pirate
+`bark shuffle(sails with treasure_map)`
+
+#### Weighted loot selection
+```bash
+loot be list of "common", "rare", "legendary"
+chances be list of 60, 35, 5
+bark weighted_choice(sails with loot, chances)
+```
+#### Functional Programming
+
+`doubloons be list of 1, 2, 3, 4`
+
+#### Map: Triple all values
+`tripled be map(doubloons, "times", 3)`
+
+#### Filter: Keep > 2 pieces
+`rich_beards be filter(doubloons, "greater_than", 2)`
+
+#### Reduce: Sum the loot
+`total be reduce(doubloons, "plus")`
+
+#### Improved Operations 🔧
+New comparisons: greater_or_equal, less_or_equal
+
+Complex math expressions: `(5 plus 3) times (10 divided_by 2)`
+
+Nested list declarations: `list of list of 1,2, list of 3,4`
+
+#### Bug Fixes & Stability 🐛
+- Fixed parser issues with random functions
+- Anchored list declaration parsing
+- Repaired plunder loop navigation
+- Patched floating-point treasure miscalculations
+- Secured First Mate's quarters (now inactive by default)
+
+Yo Ho Ho! With v1.2, Maroon now supports proper code organization, advanced list operations, and safer navigation through stormy code seas. Sail with confidence knowing your First Mate won't squawk unless summoned! 🦜⚔️
+
+
 ## Update v1.1
 ### New Control Structures
 

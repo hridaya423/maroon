@@ -11,7 +11,6 @@ class SwitchCaseHandler:
             self._process_switch_block(command)
             return True
         return False
-    
     def _process_switch_block(self, command: str):
         value_expr = command[7:].strip().rstrip(':')
         try:

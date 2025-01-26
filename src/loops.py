@@ -2,6 +2,7 @@ from typing import Any, List, Optional
 from .types import PirateType
 from .exceptions import PirateException
 import re
+from shlex import split
 
 class LoopHandler:
     def __init__(self, interpreter):
@@ -71,8 +72,14 @@ class LoopHandler:
 
             self.interpreter.push_scope()
             for item in lst.value:
-                self.interpreter.treasure_chest[var_name] = PirateType(item)
-                self.interpreter.parse_command(action)
+                self.interpreter.treasure_chest[var_name] = item if isinstance(item, PirateType) else PirateType(item)
+                
+                try:
+                    action_parts = split(action)
+                    cmd = ' '.join(action_parts)
+                    self.interpreter.parse_command(cmd)
+                except ValueError:
+                    raise PirateException("Mismatched quotes in plunder action")
             self.interpreter.pop_scope()
             
         except Exception as e:
