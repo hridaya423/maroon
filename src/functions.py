@@ -1,4 +1,3 @@
-"""Function representation for the Maroon interpreter."""
 from typing import List, Any, Optional
 
 from .exceptions import PirateException
@@ -23,12 +22,10 @@ class PirateFunction:
                 f"Arrr! {self.name} expects at most {len(self.params)} arguments, got {len(args)}",
                 context=f"Parameters: {[p[0] for p in self.params]}"
             )
-
         combined_args = []
         for i in range(len(self.params)):
             param_name, default_value = self.params[i]
             combined_args.append(args[i] if i < len(args) else default_value)
-
         interpreter.push_scope()
         try:
             for param_info, arg in zip(self.params, combined_args):
@@ -39,7 +36,6 @@ class PirateFunction:
                     arg if isinstance(arg, PirateType) 
                     else PirateType(arg)
                 )
-            
             result = None
             for line in self.body:
                 line = line.strip()
@@ -47,9 +43,7 @@ class PirateFunction:
                     result = interpreter.parse_expression(line[6:].strip())
                     break
                 result = interpreter.parse_command(line)
-            
             return result
-
         except Exception as e:
             raise PirateException(
                 f"Mutiny in function {self.name}!",

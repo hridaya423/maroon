@@ -1,4 +1,3 @@
-"""Core interpreter for Maroon"""
 import re
 import math
 import operator
@@ -66,6 +65,10 @@ class PirateInterpreter:
             'shout': self.pirate_shout,
             'split_loot': self.pirate_split,
             'join_crew': self.pirate_join,
+            'help': self.pirate_help,
+            'check_type': lambda value, type_name: self._check_type(value, type_name),
+            'assert_type': lambda value, type_name: self._assert_type(value, type_name),
+            'is_list_of_type': self._is_list_of_type,
         }
         self.pirate_crew = {}
         self.pirate_ops = {
@@ -93,6 +96,48 @@ class PirateInterpreter:
         self.loop_handler = LoopHandler(self)
         self.switch_handler = SwitchCaseHandler(self)
         self.try_catch_handler = TryCatchHandler(self)
+        self.ship_help = {
+            'bark': "Prints messages to the console. Usage: bark <message1>, <message2>, ...",
+            'count_booty': "Returns the number of items in a list. Usage: count_booty <list>",
+            'plunder': "Finds the maximum value in a list. Usage: plunder <list>",
+            'abandon': "Finds the minimum value in a list. Usage: abandon <list>",
+            'type_of': "Returns the type of a value. Usage: type_of <value>",
+            'debug_chest': "Displays all variables in the current scope. Usage: debug_chest",
+            'sqrt': "Calculates the square root of a number. Usage: sqrt <number>",
+            'abs': "Returns the absolute value of a number. Usage: abs <number>",
+            'round': "Rounds a number to the nearest integer. Usage: round <number>",
+            'to_int': "Converts a value to an integer. Usage: to_int <value>",
+            'to_float': "Converts a value to a float. Usage: to_float <value>",
+            'to_str': "Converts a value to a string. Usage: to_str <value>",
+            'roll_dice': "Rolls a dice with the specified number of sides (default 6). Usage: roll_dice [sides]",
+            'random_float': "Generates a random float. Usage: random_float [min=0] [max=1]",
+            'random_pick': "Picks a random element from a list. Usage: random_pick <list>",
+            'flip_coin': "Flips a coin, returning 'heads' or 'tails'. Usage: flip_coin",
+            'random_sample': "Returns a random sample from a list. Usage: random_sample <list> <sample_size>",
+            'normal_random': "Generates a random number from a normal distribution. Usage: normal_random [mu=0] [sigma=1]",
+            'log': "Calculates the logarithm of a number with a specified base. Usage: log <number> [base=e]",
+            'roll_multiple': "Rolls multiple dice. Usage: roll_multiple <num_dice> [sides=6]",
+            'factorial': "Calculates the factorial of a number. Usage: factorial <integer>",
+            'sin': "Calculates the sine of an angle (in radians). Usage: sin <number>",
+            'cos': "Calculates the cosine of an angle (in radians). Usage: cos <number>",
+            'tan': "Calculates the tangent of an angle (in radians). Usage: tan <number>",
+            'exp': "Calculates the exponential of a number. Usage: exp <number>",
+            'mean': "Calculates the mean of a list. Usage: mean <list>",
+            'median': "Finds the median of a list. Usage: median <list>",
+            'sum': "Sums all elements in a list. Usage: sum <list>",
+            'map': "Applies a function to each item in a list. Usage: map <list> <function>",
+            'filter': "Filters a list using a function. Usage: filter <list> <function>",
+            'reduce': "Reduces a list using a function. Usage: reduce <list> <function> [initial]",
+            'shuffle': "Shuffles a list. Usage: shuffle <list>",
+            'weighted_choice': "Chooses an element from a list based on weights. Usage: weighted_choice <items> <weights>",
+            'shout': "Converts a string to uppercase. Usage: shout <string>",
+            'split_loot': "Splits a string into a list. Usage: split_loot <string> [separator]",
+            'join_crew': "Joins a list of strings into a single string. Usage: join_crew <list> <separator>",
+            'help': "Displays help information. Usage: help [function_name]",
+            'check_type': "Checks if a value matches a type. Returns boolean. Usage: check_type <value> <type>",
+            'assert_type': "Throws error if value doesn't match type. Usage: assert_type <value> <type>",
+            'is_list_of_type': "Checks if all list elements match a type. Usage: is_list_of_type <list> <type>",
+        }
         
     def pirate_flip_coin(self):
         return choice(['heads', 'tails'])
@@ -103,17 +148,16 @@ class PirateInterpreter:
             lst_value = lst
         shuffled = sample(lst_value, len(lst_value))
         return shuffled
+    
+
     def pirate_shout(self, s):
         if isinstance(s, PirateType):
             s_val = s.value
         else:
             s_val = s
-            
         if not isinstance(s_val, str):
             raise PirateException("Shout expects a string treasure!")
-            
         return PirateType(s_val.upper(), 'string')
-
     def pirate_split(self, s, sep=None):
         if isinstance(s, PirateType):
             s_val = s.value
@@ -132,6 +176,26 @@ class PirateInterpreter:
         split_list = s_val.split(sep_val) if sep_val else s_val.split()
         pirate_list = [PirateType(item, 'string') for item in split_list]
         return PirateType(pirate_list, 'list')
+    
+    def pirate_help(self, *args):
+        if not args:
+            help_text = "Avast! Here be the functions ye can use:\n"
+            for func_name in sorted(self.ship_help.keys()):
+                brief = self.ship_help[func_name].split('.')[0]
+                help_text += f"- {func_name}: {brief}\n"
+            help_text += "\nUse help sails with 'function' to learn more about a specific function, matey!"
+            return PirateType(help_text, 'string')
+        else:
+            func_name_arg = args[0]
+            if isinstance(func_name_arg, PirateType):
+                func_name = func_name_arg.value
+            else:
+                func_name = func_name_arg
+            if func_name in self.ship_help:
+                return PirateType(self.ship_help[func_name], 'string')
+            else:
+                return PirateType(f"Arrr! No help found for '{func_name}'. Check if ye spelled it right, scallywag!", 'string')
+            
     def pirate_join(self, items, sep):
         if isinstance(items, PirateType):
             items_val = items.value
@@ -148,6 +212,7 @@ class PirateInterpreter:
         str_items = [str(item.value if isinstance(item, PirateType) else item) 
                     for item in items_val]
         return PirateType(sep_val.join(str_items), 'string')
+    
     def pirate_weighted_choice(self, items, weights):
         items_list = items.value if isinstance(items, PirateType) else items
         weights_list = weights.value if isinstance(weights, PirateType) else weights
@@ -170,11 +235,11 @@ class PirateInterpreter:
             return uniform(args[0], args[1])
         else:
             raise PirateException("random_float expects 0-2 arguments")
+        
     def pirate_random_sample(self, lst, k):
         lst_value = lst.value if isinstance(lst, PirateType) else lst
         k_value = k.value if isinstance(k, PirateType) else k
         return sample(lst_value, k_value)
-    
     
     def pirate_map(self, collection, func_ref):
         if isinstance(collection, PirateType):
@@ -185,7 +250,6 @@ class PirateInterpreter:
             func_ref = func_ref.value
         if not isinstance(func_ref, str):
             raise PirateException("Function reference must be a string")
-        
         if func_ref in self.ship_logs:
             func = self.ship_logs[func_ref]
             mapped = []
@@ -209,7 +273,7 @@ class PirateInterpreter:
             return mapped
         else:
             raise PirateException(f"Function {func_ref} not found")
-
+        
     def pirate_filter(self, collection, func_ref):
         if isinstance(collection, PirateType):
             collection = collection.value
@@ -219,7 +283,6 @@ class PirateInterpreter:
             func_ref = func_ref.value
         if not isinstance(func_ref, str):
             raise PirateException("Function reference must be a string")
-        
         filtered = []
         if func_ref in self.ship_logs:
             func = self.ship_logs[func_ref]
@@ -243,7 +306,6 @@ class PirateInterpreter:
         else:
             raise PirateException(f"Function {func_ref} not found")
         return filtered
-
     def pirate_reduce(self, collection, func_ref, initial=None):
         if isinstance(collection, PirateType):
             collection = collection.value
@@ -336,12 +398,10 @@ class PirateInterpreter:
                 if arg:
                     parsed_arg = self.parse_expression(arg)
                     args.append(parsed_arg)
-            
             if func_name in self.ship_logs:
                 unboxed_args = [arg.value if isinstance(arg, PirateType) else arg for arg in args]
                 result = self.ship_logs[func_name](*unboxed_args)
                 return PirateType(result)
-            
             if func_name in self.pirate_crew:
                 return self.execute_function(func_name, args)
             raise PirateException(f"Unknown function: {func_name}")
@@ -374,7 +434,6 @@ class PirateInterpreter:
         if func_name in self.pirate_crew:
             self.push_scope()
             func = self.pirate_crew[func_name]
-
             combined_args = []
             for i, param_info in enumerate(func.params):
                 param_name, default_value = param_info
@@ -382,7 +441,6 @@ class PirateInterpreter:
                     combined_args.append(args[i])
                 else:
                     combined_args.append(default_value)
-
             for param_info, arg in zip(func.params, combined_args):
                 param_name = param_info[0]
                 self.treasure_chest[param_name] = arg
@@ -415,33 +473,56 @@ class PirateInterpreter:
         print(message)
         if self.easter_eggs.parrot_mode:
             print(message)
-
+            
+    
     def debug_treasure_chest(self):
         print("🏴‍☠️ Current Treasure Chest Contents:")
         for name, value in self.treasure_chest.items():
             print(f"{name}: {value}")
-
+    
     def push_scope(self):
         self.scope_stack.append({})
-
+    
     def pop_scope(self):
         if len(self.scope_stack) > 1:
             self.scope_stack.pop()
+    
+    def _check_type(self, value, type_name):
+        if isinstance(type_name, PirateType):
+            type_name = type_name.value
+        if isinstance(value, PirateType):
+            actual_type = value.type
+        else:
+            actual_type = type(value).__name__
+            if actual_type in ['int', 'float']:
+                actual_type = 'number'
+        return PirateType(actual_type.lower() == type_name.lower(), 'boolean')
+    
+    def _assert_type(self, value, type_name):
+        if not self._check_type(value, type_name).value:
+            raise PirateException(f"Yarrr! Expected {type_name} but found {value.type if hasattr(value, 'type') else type(value).__name__}")
 
+    def _is_list_of_type(self, lst, element_type):
+        lst = lst.value if isinstance(lst, PirateType) else lst
+        if not isinstance(lst, list):
+            return PirateType(False, 'boolean')
+        return PirateType(
+            all(self._check_type(item, element_type).value for item in lst),
+            'boolean'
+        )
     @property
     def treasure_chest(self):
         return self.scope_stack[-1]
-
+    
     def resolve_variable(self, var_name: str) -> Any:
         for scope in reversed(self.scope_stack):
             if var_name in scope:
                 return scope[var_name]
-        raise PirateException(f"No treasure found for {var_name}")
-
+        raise PirateException(f"No treasure found for {var_name}")  
+    
     def parse_command(self, command: str, line_number: int = None) -> Any:
         try:
             command = command.strip()
-            
             if not command or command.startswith('#'):
                 return None
             
@@ -519,7 +600,6 @@ class PirateInterpreter:
             if hasattr(self, 'current_function'):
                 self.current_function.body.append(command)
                 return None
-            
             func_call = re.match(r'^(\w+)\s+sails\s+with\s*\(?(.*?)\)?$', command)
             if func_call:
                 func_name = func_call.group(1)

@@ -208,3 +208,15 @@ bark loot[1]
 
 crew be list of "Blackbeard", "Calico", "Anne"
 bark join_crew sails with crew, " & "
+
+# Update v1.2.1
+
+help sails with "sum"
+help sails with
+
+x be 5  
+check_type sails with x, "number"
+assert_type sails with x, "number"
+
+loot be list of [1, 2, "gold"]  
+is_list_of_type sails with loot, "number"

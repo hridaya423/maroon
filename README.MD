@@ -2,6 +2,28 @@
 
 Maroon is a pirate-themed programming language that makes coding as adventurous as sailing the high seas! Written in Python, it features a unique syntax inspired by pirate parlance while maintaining functional programming capabilities.
 
+## Update v1.2.1 - The Captain's Reshuffle:
+
+### New jewels
+
+#### Built-in help system
+Avast ye! Added a built-in help system for salty sea dogs to navigate the treacherous waters of Maroon—use help to see all commands or help sails with "function" to inspect specific functions. Now even landlubbers can avoid Davy Jones' locker when coding! 🏴‍☠️
+```bash
+help sails with
+help sails with sum
+```
+#### Type Checking Functions
+Shiver me types! Added new type-checkin' tools to avoid walkin' the plank of runtime errors—use check_type, assert_type, and is_list_of_type to verify yer loot. Now ye can sniff out phony values faster than a shark smells blood! 🦈
+
+```bash
+x be 5  
+check_type sails with x, "number"
+assert_type sails with x, "number"
+
+loot be list of [1, 2, "gold"]  
+is_list_of_type sails with loot, "number"
+```
+
 ## Update v1.2 - The Crew Expansion
 ### New Features & Booty
 
